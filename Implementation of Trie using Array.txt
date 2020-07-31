@@ -1,0 +1,75 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class TrieNode
+{
+    TrieNode[] arr = new TrieNode[26];
+    boolean isEnd;
+    TrieNode(){
+        isEnd = false;
+        for(int i=0;i<26;i++){
+            arr[i] = null;
+        }
+    }
+}
+
+class Trie
+{
+    public void insert(TrieNode root,String str){
+        int len = str.length();
+        TrieNode t = root;
+        for(int i=0;i<len;i++){
+            int index = str.charAt(i)-'a';
+            if(t.arr[index] == null)
+               t.arr[index] = new TrieNode();
+            t = t.arr[index];   
+        }
+        t.isEnd = true;
+    }
+    
+    public boolean search(TrieNode root,String str){
+        TrieNode t = root;
+        for(int i =0;i<str.length();i++){
+            int index = str.charAt(i)-'a';
+            if(t.arr[index] == null)
+              return false;
+            t = t.arr[index];  
+        }
+        if(t!=null && t.isEnd == true)
+          return true;
+        return false;  
+    }
+    
+    
+}
+
+class GFG
+ {
+	public static void main (String[] args)
+	 {
+	     Scanner sc = new Scanner(System.in);
+	     int tc = sc.nextInt();
+	     while(tc-->0){
+        	         int n = sc.nextInt();
+        	         String ar[] = new String[n];
+        	         for(int i=0;i<n;i++){
+        	             ar[i] = sc.next();
+        	         }
+        	         
+        	          Trie tree = new Trie();
+        	          TrieNode root = new TrieNode();
+        	         for(int i = 0;i<n;i++){
+        	            tree.insert(root,ar[i]);
+        	         }
+	               
+	               
+        	         String toSearch = sc.next();
+        	         if(tree.search(root,toSearch))
+        	           System.out.println("1");
+        	         else
+        	           System.out.println("0");
+        	   }
+	         
+	 }
+ }
